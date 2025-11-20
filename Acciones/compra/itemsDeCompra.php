@@ -13,10 +13,10 @@ if($session->activa() && isset($datos['idcompra'])){
     foreach($listaItems as $item){
         $prod = $item->getObjProducto();
         $resultado[] = [
-            'pronombre' => $prod->getProNombre(),
+            'pronombre' => $prod->getProDetalle(), 
             'cantidad' => $item->getCiCantidad(),
-            'precio' => 100, // Precio simulado
-            'total' => $item->getCiCantidad() * 100
+            'precio' => $prod->getProPrecio(), 
+            'total' => $item->getCiCantidad() * $prod->getProPrecio() 
         ];
     }
 }
