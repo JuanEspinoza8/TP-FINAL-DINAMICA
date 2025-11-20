@@ -1,9 +1,6 @@
 <?php
-include_once("../configuracion.php");
-$session = new Session();
-if($session->activa()){
-    header('Location: productos.php');
-} else {
-    header('Location: login.php');
-}
+include_once("configuracion.php");
+
+header('Location: /proyecto/Vista/productos.php');
+exit;
 ?>

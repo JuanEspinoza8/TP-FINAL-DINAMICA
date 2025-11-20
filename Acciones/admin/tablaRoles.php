@@ -2,11 +2,12 @@
 include_once("../../configuracion.php");
 $session = new Session();
 
-// Validamos que haya sesión activa y sea Admin (Rol 1)
+
 if($session->activa() && $session->getRolActivo() == 1){
-    $objRol = new Rol();
-    // Llamamos al metodo listar del Modelo Rol
-    $listaRoles = $objRol->listar("");
+    
+    $abmRol = new abmRol();
+    $listaRoles = $abmRol->buscar(null);
+    
     $salida = [];
     
     foreach($listaRoles as $rol){
@@ -17,7 +18,6 @@ if($session->activa() && $session->getRolActivo() == 1){
     }
     echo json_encode($salida);
 } else {
-    // Si no es admin o no hay sesion, devolvemos array vacio
     echo json_encode([]);
 }
 ?>
