@@ -3,23 +3,13 @@ include_once("../../configuracion.php");
 $datos = data_submitted();
 $session = new Session();
 
-// --- 1. VALIDACIÓN DE ENTORNO  ---
+
 
 // Verificar extension GD 
 if (!extension_loaded('gd')) {
     echo "<div style='font-family:sans-serif; color:#721c24; background-color:#f8d7da; padding:20px; border:1px solid #f5c6cb; margin:20px; border-radius:5px;'>
             <h3> ERROR CRÍTICO: Librería GD desactivada</h3>
-            <p>La función <b>ImageCreate()</b> no existe porque la extensión <b>GD</b> de PHP está apagada.</p>
-            <p><b>Solución en XAMPP:</b></p>
-            <ol>
-                <li>Ve al Panel de Control de XAMPP.</li>
-                <li>En la fila de Apache, click en <b>Config > php.ini</b>.</li>
-                <li>Presiona <b>Ctrl+B</b> y busca: <code>;extension=gd</code></li>
-                <li><b>Borra el punto y coma (;)</b> del principio para que quede: <code>extension=gd</code></li>
-                <li>Guarda el archivo, cierra el bloc de notas.</li>
-                <li>Dale <b>Stop</b> y luego <b>Start</b> a Apache para reiniciar.</li>
-            </ol>
-            <p>Una vez hecho esto, recarga esta página.</p>
+            
           </div>";
     exit;
 }
@@ -28,18 +18,13 @@ if (!extension_loaded('gd')) {
 $rutaFPDF = $ROOT . 'Utiles/librerias/fpdf/fpdf.php';
 $rutaQR = $ROOT . 'Utiles/librerias/phpqrcode/qrlib.php';
 
-if (!file_exists($rutaFPDF)) {
-    die("<div style='padding:20px; color:red'><b>ERROR:</b> No se encuentra FPDF en:<br> $rutaFPDF <br><br>Verifica que la carpeta se llame 'fpdf' y contenga 'fpdf.php'.</div>");
-}
-if (!file_exists($rutaQR)) {
-    die("<div style='padding:20px; color:red'><b>ERROR:</b> No se encuentra PHPQRCode en:<br> $rutaQR <br><br>Verifica que la carpeta se llame 'phpqrcode' y contenga 'qrlib.php'.</div>");
-}
 
-// --- 2. CARGA DE LIBRERIAS ---
+
+
 require_once($rutaFPDF);
 require_once($rutaQR);
 
-// --- 3. GENERACIÓN DEL DOUCMENTO ---
+
 if($session->activa() && isset($datos['idcompra'])){
     $idCompra = $datos['idcompra'];
     
@@ -57,7 +42,7 @@ if($session->activa() && isset($datos['idcompra'])){
         $nombreCliente = count($usuario) > 0 ? $usuario[0]->getUsNombre() : 'Cliente';
         $mailCliente = count($usuario) > 0 ? $usuario[0]->getUsMail() : '-';
 
-        // --- Generar QR Temporal ---
+        
         $contenidoQR = "Compra #$idCompra - Cliente: $nombreCliente - Fecha: " . $objCompra->getCoFecha();
         $tempDir = $ROOT . 'Vista/img/qr/'; 
         
@@ -71,10 +56,10 @@ if($session->activa() && isset($datos['idcompra'])){
         $fileNameQR = 'qr_compra_'.$idCompra.'.png';
         $pngAbsoluteFilePath = $tempDir . $fileNameQR;
         
-        // Generar PNG del QR
+       
         QRcode::png($contenidoQR, $pngAbsoluteFilePath, QR_ECLEVEL_L, 3, 2);
         
-        // --- Generar PDF ---
+      
         $pdf = new FPDF();
         $pdf->AddPage();
         $pdf->SetFont('Arial','B',16);
@@ -125,7 +110,7 @@ if($session->activa() && isset($datos['idcompra'])){
         
         $pdf->Ln(15);
         
-        // Insertar QR
+        // Insertar QR debajox
         $pdf->Cell(0,10,'Codigo de Verificacion:',0,1,'C');
         $pdf->Image($pngAbsoluteFilePath, 85, null, 40);
         
