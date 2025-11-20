@@ -23,7 +23,6 @@ $listaCompras = $abmCompra->buscar(['idusuario' => $idUsuario]);
                 <?php
                 if(count($listaCompras) > 0){
                     foreach($listaCompras as $compra){
-                        // Buscar el estado actuaal
                         $estados = $abmCE->buscar(['idcompra' => $compra->getIdCompra(), 'cefechafin' => 'null']);
                         $estadoNombre = "Desconocido";
                         $tipo = 0;
@@ -36,14 +35,19 @@ $listaCompras = $abmCompra->buscar(['idusuario' => $idUsuario]);
                             elseif($tipo == 5) $estadoNombre = "En Carrito";
                         }
                         
-                        // Ocultar carrito actual de la lista de historial
                         if($tipo != 5){
                             echo "<tr>";
                             echo "<td>#".$compra->getIdCompra()."</td>";
                             echo "<td>".$compra->getCoFecha()."</td>";
                             echo "<td><span class='badge bg-secondary'>".$estadoNombre."</span></td>";
-                            // Boton pa que abre el Modal
-                            echo "<td><button class='btn btn-sm btn-primary' onclick='verDetalle(".$compra->getIdCompra().")'>Ver Items</button></td>";
+                            echo "<td>
+                                    <button class='btn btn-sm btn-primary me-1' onclick='verDetalle(".$compra->getIdCompra().")'>
+                                        <i class='fas fa-eye'></i>
+                                    </button>
+                                    <a href='../Acciones/compra/generarPDF.php?idcompra=".$compra->getIdCompra()."' target='_blank' class='btn btn-sm btn-danger' title='Descargar Factura'>
+                                        <i class='fas fa-file-pdf'></i> PDF
+                                    </a>
+                                  </td>";
                             echo "</tr>";
                         }
                     }
@@ -56,7 +60,7 @@ $listaCompras = $abmCompra->buscar(['idusuario' => $idUsuario]);
     </div>
 </div>
 
-<!-- deetalle -->
+
 <div class="modal fade" id="modalDetalle" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -70,22 +74,17 @@ $listaCompras = $abmCompra->buscar(['idusuario' => $idUsuario]);
             <tbody id="cuerpo-modal"></tbody>
         </table>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-      </div>
     </div>
   </div>
 </div>
 
 <script>
 function verDetalle(idCompra){
-    // Abrir modal
     var myModal = new bootstrap.Modal(document.getElementById('modalDetalle'));
     myModal.show();
     $('#cuerpo-modal').html('<tr><td colspan="3">Cargando...</td></tr>');
 
-    // Pedir datos
-    $.post('../Acciones/compra/itemsDeCompra.php', {idcompra: idCompra}, function(res){
+    $.post('/proyecto/Acciones/compra/itemsDeCompra.php', {idcompra: idCompra}, function(res){
         let data = JSON.parse(res);
         let html = '';
         let total = 0;
