@@ -1,5 +1,21 @@
 <?php
 class abmRol {
+    
+    public function listarRolesVista(){
+        $salida = [];
+        $listaRoles = $this->buscar(null);
+        
+        foreach($listaRoles as $rol){
+            $salida[] = [
+                'idrol' => $rol->getIdRol(),
+                'rodescripcion' => $rol->getRoDescripcion()
+            ];
+        }
+        return $salida;
+    }
+
+    // --- ABM Básico ---
+
     public function buscar($param){
         $where = " true ";
         if ($param<>NULL){
@@ -15,14 +31,14 @@ class abmRol {
     public function alta($param){
         $resp = false;
         $obj = new Rol();
-        $obj->setear(null, $param['rodescripcion']);
+        $obj->setear($param['idrol'], $param['rodescripcion']); // ID suele ser autoincremental o manual dependiendo tu BD, ajusta si es necesario
         if ($obj->insertar()){ $resp = true; }
         return $resp;
     }
 
     public function baja($param){
         $resp = false;
-        if (isset($param['idrol'])){
+        if ($this->seteadosCamposClaves($param)){
             $obj = new Rol();
             $obj->setear($param['idrol'], null);
             if ($obj->eliminar()){ $resp = true; }
@@ -32,12 +48,16 @@ class abmRol {
 
     public function modificacion($param){
         $resp = false;
-        if (isset($param['idrol'])){
+        if ($this->seteadosCamposClaves($param)){
             $obj = new Rol();
             $obj->setear($param['idrol'], $param['rodescripcion']);
             if ($obj->modificar()){ $resp = true; }
         }
         return $resp;
+    }
+
+    private function seteadosCamposClaves($param){
+        return isset($param['idrol']);
     }
 }
 ?>

@@ -4,8 +4,8 @@ class Producto {
     private $pronombre;
     private $prodetalle;
     private $procantstock;
-    private $proprecio;  // Nuevo
-    private $proimagen;  // Nuevo
+    private $proprecio;
+    private $proimagen;
     private $mensajeoperacion;
 
     public function __construct(){
@@ -92,6 +92,22 @@ class Producto {
             }
         } else {
             $this->setMensajeoperacion("Producto->modificar: ".$base->getError());
+        }
+        return $resp;
+    }
+
+    public function eliminar(){
+        $resp = false;
+        $base = new BaseDatos();
+        $sql="DELETE FROM producto WHERE idproducto=".$this->idproducto;
+        if ($base->Iniciar()) {
+            if ($base->Ejecutar($sql)) {
+                $resp = true;
+            } else {
+                $this->setMensajeoperacion("Producto->eliminar: ".$base->getError());
+            }
+        } else {
+            $this->setMensajeoperacion("Producto->eliminar: ".$base->getError());
         }
         return $resp;
     }

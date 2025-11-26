@@ -1,23 +1,9 @@
 <?php
 include_once("../../configuracion.php");
-$session = new Session();
+$datos = data_submitted();
+$abmRol = new abmRol();
 
+$lista = $abmRol->listarRolesVista();
 
-if($session->activa() && $session->getRolActivo() == 1){
-    
-    $abmRol = new abmRol();
-    $listaRoles = $abmRol->buscar(null);
-    
-    $salida = [];
-    
-    foreach($listaRoles as $rol){
-        $salida[] = [
-            'idrol' => $rol->getIdRol(),
-            'rodescripcion' => $rol->getRoDescripcion()
-        ];
-    }
-    echo json_encode($salida);
-} else {
-    echo json_encode([]);
-}
+echo json_encode($lista);
 ?>

@@ -2,38 +2,20 @@
 include_once("../../configuracion.php");
 $datos = data_submitted();
 $session = new Session();
-$abmUsuario = new abmUsuario();
 
 if($session->activa()){
     $usuarioActual = $session->getUsuario();
+    $abmUsuario = new abmUsuario();
 
-    
-    if(isset($datos['idusuario']) && $datos['idusuario'] == $usuarioActual->getIdUsuario()){
+    if(isset($datos['idusuario'])){
+        $resultado = $abmUsuario->actualizarPerfil($datos, $usuarioActual);
         
-       
-        $passFinal = $usuarioActual->getUsPass();
-        
-        
-        if(isset($datos['uspass']) && trim($datos['uspass']) != ""){
-            $passFinal = md5($datos['uspass']);
-        }
-
-        $param = [
-            'idusuario' => $datos['idusuario'],
-            'usnombre' => $usuarioActual->getUsNombre(),
-            'usmail' => $datos['usmail'],
-            'uspass' => $passFinal
-        ];
-
-        if($abmUsuario->modificacion($param)){
-           
+        if($resultado['exito']){
             header('Location: ../../Vista/modificarPerfil.php?msg=actualizado');
         } else {
             header('Location: ../../Vista/modificarPerfil.php?error=db');
         }
-
     } else {
-        
         header('Location: ../../Vista/index.php');
     }
 } else {

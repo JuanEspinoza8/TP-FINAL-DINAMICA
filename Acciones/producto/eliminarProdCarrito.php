@@ -2,17 +2,16 @@
 include_once("../../configuracion.php");
 $datos = data_submitted();
 $session = new Session();
+$respuesta = ['exito' => false, 'msg' => 'Error de sesión'];
 
-if($session->activa() && isset($datos['idcompraitem'])){
-    $abmItem = new abmCompraItem();
-    
-    
-    if($abmItem->baja(['idcompraitem' => $datos['idcompraitem']])){
-        echo json_encode(['exito' => true, 'msg' => 'Producto eliminado']);
+if($session->activa()){
+    if(isset($datos['idcompraitem'])){
+        $abmCompra = new abmCompra();
+        $respuesta = $abmCompra->quitarProducto($datos['idcompraitem']);
     } else {
-        echo json_encode(['exito' => false, 'msg' => 'Error al eliminar']);
+        $respuesta['msg'] = 'Datos insuficientes.';
     }
-} else {
-    echo json_encode(['exito' => false, 'msg' => 'Error de sesión']);
 }
+
+echo json_encode($respuesta);
 ?>
