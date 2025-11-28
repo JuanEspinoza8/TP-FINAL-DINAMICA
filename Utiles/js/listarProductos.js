@@ -1,6 +1,6 @@
 $(document).ready(function(){
     $.ajax({
-        url: '/proyecto/Acciones/producto/listarProdTienda.php',
+        url: '/proyecto/Vista/Accion/producto/listarProdTienda.php',
         type: 'POST',
         data: { soloStock: 'true' }, 
         dataType: 'json',
@@ -58,7 +58,7 @@ function agregarCarrito(idProd, stockMax){
         return;
     }
 
-    $.post('/proyecto/Acciones/producto/agregarProdCarrito.php', {idproducto: idProd, cantidad: cant}, function(res){
+    $.post('/proyecto/Vista/Accion/producto/agregarProdCarrito.php', {idproducto: idProd, cantidad: cant}, function(res){
         try { 
             let data = JSON.parse(res);
             alert(data.msg);

@@ -58,21 +58,21 @@ $(document).ready(function(){
 
 function cargarOrdenes(){
     $.ajax({
-        url: '/proyecto/Acciones/compra/listarOrdenes.php',
+        url: '/proyecto/Vista/Accion/compra/listarOrdenes.php',
         type: 'POST',
         dataType: 'json',
         success: function(data){
             let html = '';
             if(data.length > 0){
                 data.forEach(orden => {
-                    // Colores segun estado
+                  
                     let badgeClass = 'bg-secondary';
                     if(orden.idestado == 1) badgeClass = 'bg-warning text-dark'; // Iniciada
                     if(orden.idestado == 2) badgeClass = 'bg-info text-dark';    // Aceptada
                     if(orden.idestado == 3) badgeClass = 'bg-success';           // Enviada
                     if(orden.idestado == 4) badgeClass = 'bg-danger';            // Cancelada
 
-                    // Botones de accion segun estado actual
+                   
                     let botones = '';
                     if(orden.idestado == 1){
                         botones += `<button class="btn btn-sm btn-outline-primary me-1" onclick="cambiarEstado(${orden.idcompra}, 2)">Aceptar</button>`;
@@ -118,7 +118,7 @@ function verItems(idCompra){
     myModal.show();
     $('#cuerpo-modal-items').html('<tr><td colspan="2">Cargando...</td></tr>');
     
-    $.post('/proyecto/Acciones/compra/itemsDeCompra.php', {idcompra: idCompra}, function(res){
+    $.post('/proyecto/Vista/Accion/compra/itemsDeCompra.php', {idcompra: idCompra}, function(res){
         let data = JSON.parse(res);
         let html = '';
         data.forEach(i => {

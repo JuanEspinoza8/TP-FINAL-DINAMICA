@@ -84,7 +84,7 @@ function verDetalle(idCompra){
     myModal.show();
     $('#cuerpo-modal').html('<tr><td colspan="3">Cargando...</td></tr>');
 
-    $.post('/proyecto/Acciones/compra/itemsDeCompra.php', {idcompra: idCompra}, function(res){
+    $.post('/proyecto/Vista/Accion/compra/itemsDeCompra.php', {idcompra: idCompra}, function(res){
         let data = JSON.parse(res);
         let html = '';
         let total = 0;

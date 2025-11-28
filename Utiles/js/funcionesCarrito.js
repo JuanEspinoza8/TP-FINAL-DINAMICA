@@ -5,7 +5,7 @@ $(document).ready(function(){
 function cargarCarrito(){
     $.ajax({
         
-        url: '/proyecto/Acciones/compra/listadoProdCarrito.php',
+        url: '/proyecto/Vista/Accion/compra/listadoProdCarrito.php',
         type: 'POST',
         dataType: 'json',
         success: function(items){
@@ -48,7 +48,7 @@ function cargarCarrito(){
 
 function eliminarItem(idItem){
     if(confirm('¿Seguro desea eliminar este producto?')){
-        $.post('/proyecto/Acciones/producto/eliminarProdCarrito.php', {idcompraitem: idItem}, function(res){
+        $.post('/proyecto/Vista/Accion/producto/eliminarProdCarrito.php', {idcompraitem: idItem}, function(res){
             try {
                 let data = JSON.parse(res);
                 if(data.exito){
@@ -63,7 +63,7 @@ function eliminarItem(idItem){
 
 function vaciarCarrito(){
     if(confirm('¿Seguro desea vaciar todo el carrito?')){
-        $.post('/proyecto/Acciones/compra/vaciarCarrito.php', {}, function(res){
+        $.post('/proyecto/Vista/Accion/compra/vaciarCarrito.php', {}, function(res){
             cargarCarrito();
         });
     }
@@ -71,7 +71,7 @@ function vaciarCarrito(){
 
 function finalizarCompra(){
     if(confirm('¿Confirmar compra?')){
-        $.post('/proyecto/Acciones/compra/ejecutarCompraCarrito.php', {}, function(res){
+        $.post('/proyecto/Vista/Accion/compra/ejecutarCompraCarrito.php', {}, function(res){
             try {
                 let data = JSON.parse(res);
                 alert(data.msg);

@@ -33,7 +33,7 @@ $(document).ready(function(){
 
 function cargarUsuarios(){
     $.ajax({
-        url: '../Acciones/admin/tablaUsuarios.php',
+        url: '../Vista/Accion/admin/tablaUsuarios.php',
         type: 'POST',
         dataType: 'json',
         success: function(data){
@@ -61,7 +61,7 @@ function cargarUsuarios(){
 
 function agregarRol(idUser, idRol){
     if(confirm("¿Asignar este rol al usuario?")){
-        $.post('../Acciones/admin/actualizarRol.php', {idusuario: idUser, idrol: idRol}, function(res){
+        $.post('../Vista/Accion/admin/actualizarRol.php', {idusuario: idUser, idrol: idRol}, function(res){
             let data = JSON.parse(res);
             alert(data.msg);
             cargarUsuarios();

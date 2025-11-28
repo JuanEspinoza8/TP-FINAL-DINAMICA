@@ -2,7 +2,7 @@
 include_once('Estructura/cabecera.php'); 
 if(!$session->activa()) { header('Location: login.php'); exit; }
 
-// Obtenemos usuario actual de la sesioooon
+
 $usuario = $session->getUsuario();
 ?>
 

@@ -15,7 +15,7 @@ if(!$session->activa()) { header('Location: login.php'); exit; }
                 </tr>
             </thead>
             <tbody id="cuerpo-carrito">
-                <!-- el resto se llebna con js -->
+               
             </tbody>
         </table>
     </div>

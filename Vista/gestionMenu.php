@@ -50,7 +50,7 @@ if(!$session->activa() || $rol != 1) {
         </div>
     </div>
 
-    <!-- Edición -->
+  
     <div class="table-responsive shadow-sm">
         <table class="table table-bordered table-hover bg-white align-middle">
             <thead class="table-dark">
@@ -74,15 +74,15 @@ if(!$session->activa() || $rol != 1) {
 var rolesDisponibles = [];
 
 $(document).ready(function(){ 
-    // Primero cargamos los roles disponibles para armar los checkboxes
+   
     cargarRoles();
 });
 
 function cargarRoles(){
-    $.post('/proyecto/Acciones/admin/tablaRoles.php', {}, function(res){
+    $.post('/proyecto/Vista/Accion/admin/tablaRoles.php', {}, function(res){
         try {
             rolesDisponibles = JSON.parse(res);
-            // Generar checkboxes pa alta
+            
             let html = '';
             if(rolesDisponibles.length > 0){
                 rolesDisponibles.forEach(r => {
@@ -97,7 +97,7 @@ function cargarRoles(){
             }
             $('#container-roles-alta').html(html);
             
-            // Una vez tenemos roles, cargamos los menus
+           
             cargarMenusAdmin();
         } catch(e) {
             console.error("Error parsing roles", e);
@@ -106,16 +106,16 @@ function cargarRoles(){
 }
 
 function cargarMenusAdmin(){
-    $.post('/proyecto/Acciones/admin/listarMenuesCompleto.php', {}, function(res){
+    $.post('/proyecto/Vista/Accion/admin/listarMenuesCompleto.php', {}, function(res){
         let data = JSON.parse(res);
         let html = '';
         
         if(data.length > 0){
             data.forEach(m => {
-                // checkboxes
+                
                 let rolesHtml = '<div class="d-flex flex-wrap gap-2">';
                 rolesDisponibles.forEach(r => {
-                    // Verificamos si el menu tiene este rol asignado
+                    
                     let checked = m.roles.includes(r.idrol) ? 'checked' : '';
                     rolesHtml += `
                     <div class="form-check mb-0">
@@ -125,7 +125,7 @@ function cargarMenusAdmin(){
                 });
                 rolesHtml += '</div>';
 
-                // Botones de estado
+               
                 let btnEstado = m.medeshabilitado == null ? 
                     `<button class="btn btn-sm btn-outline-danger" onclick="cambiarEstado(${m.idmenu}, 'baja')">
                         <i class="fas fa-ban"></i> Baja
@@ -163,7 +163,7 @@ function cargarMenusAdmin(){
 
 function crearMenu(){
     
-    $.post('/proyecto/Acciones/admin/guardarMenu.php', $('#form-menu').serialize() + '&accion=nuevo', function(res){
+    $.post('/proyecto/Vista/Accion/admin/guardarMenu.php', $('#form-menu').serialize() + '&accion=nuevo', function(res){
         let response = JSON.parse(res);
         alert(response.msg);
         if(response.exito){

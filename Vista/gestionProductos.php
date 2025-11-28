@@ -47,11 +47,11 @@ $(document).ready(function(){ cargarProductosGestion(); });
 
 function cargarProductosGestion(){
     $.ajax({
-        
-        url: 'Accion/producto/listarProdTienda.php',
+        url: 'Accion/producto/listarProdTienda.php',,
         type: 'POST', dataType: 'json',
         success: function(productos){
             let html = '<table class="table table-bordered bg-white align-middle">';
+           
             html += '<thead class="table-dark"><tr><th style="width:50px">ID</th><th style="width:150px">Imagen</th><th>Nombre</th><th>Detalle</th><th style="width:100px">Precio</th><th style="width:80px">Stock</th><th>Acciones</th></tr></thead><tbody>';
             productos.forEach(prod => {
                 html += `<tr>
@@ -76,7 +76,7 @@ function cargarProductosGestion(){
 }
 
 function crearProducto(){
-    $.post('Accion/producto/altaProducto.php', $('#form-alta-prod').serialize(), function(res){
+    $.post('/proyecto/Vista/Accion/producto/altaProducto.php', $('#form-alta-prod').serialize(), function(res){
         let response = JSON.parse(res);
         alert(response.msg);
         if(response.exito){ $('#form-alta-prod')[0].reset(); cargarProductosGestion(); }
@@ -84,12 +84,12 @@ function crearProducto(){
 }
 
 function guardarProducto(id){
-    $.post('Accion/producto/editarProducto.php', {
+    $.post('/proyecto/Vista/Accion/producto/editarProducto.php', {
         idproducto: id,
         pronombre: $('#nom_'+id).val(),
         prodetalle: $('#det_'+id).val(),
         procantstock: $('#stk_'+id).val(),
-        proprecio: $('#pre_'+id).val(), 
+        proprecio: $('#pre_'+id).val(),
         proimagen: $('#img_'+id).val() 
     }, function(res){
         alert(JSON.parse(res).msg);

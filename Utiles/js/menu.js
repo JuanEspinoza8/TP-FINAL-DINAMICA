@@ -1,7 +1,7 @@
 $(document).ready(function() {
     
     $.ajax({
-        url: '/proyecto/Acciones/admin/tablaMenues.php', 
+        url: '/proyecto/Vista/Accion/admin/tablaMenues.php', 
         type: 'POST',
         dataType: 'json',
         success: function(data) {

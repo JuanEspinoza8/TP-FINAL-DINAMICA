@@ -14,7 +14,7 @@
         }
         ?>
 
-        <form action="../Acciones/login/accionLogin.php" method="post">
+        <form action="../Vista/Accion/login/accionLogin.php" method="post">
             <div class="mb-3">
                 <label class="form-label">Usuario</label>
                 <input type="text" name="usnombre" class="form-control" required autofocus>
@@ -30,7 +30,7 @@
 
         <hr>
         
-        <!-- ENLACE AL REGISTRO -->
+       
         <div class="text-center">
             <p class="mb-2">¿No tienes una cuenta?</p>
             <a href="registro.php" class="btn btn-outline-success w-100">Registrarse</a>
