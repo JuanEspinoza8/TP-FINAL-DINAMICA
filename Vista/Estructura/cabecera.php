@@ -47,7 +47,7 @@ if ($session->activa()) {
                 <?php echo $objUsuario->getUsNombre(); ?> 
                 (Rol: <?php echo $session->getRolActivo(); ?>)
             </span>
-            <a href="/proyecto/Acciones/login/cerrarSesion.php" class="btn btn-outline-danger btn-sm">Salir</a>
+            <a href="/proyecto/Vista/Accion/login/cerrarSesion.php" class="btn btn-outline-danger btn-sm">Salir</a>
         <?php else: ?>
             <a href="/proyecto/Vista/login.php" class="btn btn-outline-light btn-sm">Ingresar</a>
         <?php endif; ?>
