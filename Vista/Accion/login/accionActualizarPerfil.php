@@ -11,14 +11,14 @@ if($session->activa()){
         $resultado = $abmUsuario->actualizarPerfil($datos, $usuarioActual);
         
         if($resultado['exito']){
-            header('Location: ../../Vista/modificarPerfil.php?msg=actualizado');
+            header('Location: ../../../Vista/modificarPerfil.php?msg=actualizado');
         } else {
-            header('Location: ../../Vista/modificarPerfil.php?error=db');
+            header('Location: ../../../Vista/modificarPerfil.php?error=db');
         }
     } else {
-        header('Location: ../../Vista/index.php');
+        header('Location: ../../../Vista/index.php');
     }
 } else {
-    header('Location: ../../Vista/login.php');
+    header('Location: ../../../Vista/login.php');
 }
 ?>

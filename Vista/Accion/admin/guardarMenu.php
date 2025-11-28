@@ -1,14 +1,13 @@
 <?php
-include_once("../../configuracion.php");
+include_once("../../../configuracion.php");
 $datos = data_submitted();
 $session = new Session();
-$res = ['exito'=>false];
+$res = ['exito'=>false, 'msg'=>'Permisos insuficientes'];
 
 if($session->activa() && $session->getRolActivo() == 1){
     $abmMenu = new abmMenu();
-    if($abmMenu->cambiarEstadoMenu($datos)){
-        $res['exito'] = true;
-    }
+    $res = $abmMenu->guardarMenuConRoles($datos);
 }
+
 echo json_encode($res);
 ?>

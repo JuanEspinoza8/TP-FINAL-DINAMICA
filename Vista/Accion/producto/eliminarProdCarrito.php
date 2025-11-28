@@ -1,5 +1,5 @@
 <?php
-include_once("../../configuracion.php");
+include_once("../../../configuracion.php");
 $datos = data_submitted();
 $session = new Session();
 $respuesta = ['exito' => false, 'msg' => 'Error de sesión'];

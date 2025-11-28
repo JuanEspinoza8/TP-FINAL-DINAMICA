@@ -1,5 +1,5 @@
 <?php
-include_once("../../configuracion.php");
+include_once("../../../configuracion.php");
 $session = new Session();
 $resultado = [];
 
